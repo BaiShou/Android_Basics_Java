@@ -59,11 +59,12 @@ ext {
             "dagger2-android"          : "com.google.dagger:dagger-android:${dependVersion.dagger2}",
             "dagger2-android-support"  : "com.google.dagger:dagger-android-support:${dependVersion.dagger2}",
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${dependVersion.dagger2}",
+            "gson"                     : "com.google.code.gson:gson:2.8.5",
             //test
             "junit"                    : "junit:junit:4.12",
             "runner"                   : "com.android.support.test:runner:1.0.2",
             "espresso-core"            : "com.android.support.test.espresso:espresso-core:3.0.2",
-            "logger"                               : "com.orhanobut:logger:2.2.0",
+            "logger"                   : "com.orhanobut:logger:2.2.0",
 
 
     ]
