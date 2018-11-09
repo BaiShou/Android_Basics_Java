@@ -1,6 +1,6 @@
 ## 为了以后开发新项目做的一套基本包
 
-项目根据[MVPArms](https://github.com/JessYanCoding/MVPArms)修改的，欢迎使用原本
+项目根据[MVPArms](https://github.com/JessYanCoding/MVPArms)修改的，欢迎使用原版
 
 
 
