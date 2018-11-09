@@ -9,6 +9,10 @@ ext {
             api_host: hosts.api_host_debug
     ]
 
+    configs = [
+            logEnable: true,  // LogCat开关
+    ]
+
     android = [
             compileSdkVersion: 28,
             applicationId    : "com.arnold.basics",
@@ -55,11 +59,12 @@ ext {
             "rxlifecycle-components"   : "com.trello.rxlifecycle3:rxlifecycle-components:${dependVersion.rxlifecycle}",
             //tools
             "dagger2"                  : "com.google.dagger:dagger:${dependVersion.dagger2}",
-            "dagger2-compiler"         : "om.google.dagger:dagger-compiler:${dependVersion.dagger2}",
+            "dagger2-compiler"         : "com.google.dagger:dagger-compiler:${dependVersion.dagger2}",
             "dagger2-android"          : "com.google.dagger:dagger-android:${dependVersion.dagger2}",
             "dagger2-android-support"  : "com.google.dagger:dagger-android-support:${dependVersion.dagger2}",
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${dependVersion.dagger2}",
             "gson"                     : "com.google.code.gson:gson:2.8.5",
+            "eventbus"                     : "org.greenrobot:eventbus:3.1.1",
             //test
             "junit"                    : "junit:junit:4.12",
             "runner"                   : "com.android.support.test:runner:1.0.2",
