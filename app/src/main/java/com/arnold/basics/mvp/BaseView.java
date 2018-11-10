@@ -18,10 +18,4 @@ public interface BaseView {
      */
     void showMessage(String message);
 
-
-    /**
-     * 杀死自己
-     */
-    void killMyself();
-
 }

@@ -19,7 +19,7 @@ public interface IActivity {
     @NonNull
     Cache<String, Object> provideCache();
 
-    void setupActivityComponent(@NonNull ActivityComponent activityComponent);
+    void initInject();
 
     /**
      * 是否使用 EventBus
@@ -47,5 +47,5 @@ public interface IActivity {
      * @return
      * @see ActivityLifecycle.registerFragmentCallbacks
      */
-    Boolean useFragment();
+    boolean useFragment();
 }

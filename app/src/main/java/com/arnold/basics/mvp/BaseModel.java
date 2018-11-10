@@ -9,7 +9,7 @@ package com.arnold.basics.mvp;
  * 修改时间：
  * 修改备注：
  */
-public interface IModel {
+public interface BaseModel {
     /**
      * 在框架中 [BasePresenter.detachView] 时会默认调用 [IModel.onDestroy]
      */

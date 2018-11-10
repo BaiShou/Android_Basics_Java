@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import com.arnold.basics.base.App;
 import com.arnold.basics.di.component.AppComponent;
 import com.arnold.basics.di.component.DaggerAppComponent;
-import com.arnold.basics.di.module.AppModule;
 import com.arnold.basics.util.LogUtil;
 
 import javax.inject.Inject;

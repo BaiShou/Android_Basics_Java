@@ -1,6 +1,7 @@
 package com.arnold.basics.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
@@ -9,6 +10,9 @@ import com.arnold.basics.di.component.ActivityComponent;
 import com.arnold.basics.di.component.AppComponent;
 import com.arnold.basics.di.component.DaggerActivityComponent;
 import com.arnold.basics.di.module.ActivityModule;
+import com.arnold.basics.integration.cache.Cache;
+import com.arnold.basics.integration.cache.CacheType;
+import com.arnold.basics.integration.lifecycle.ActivityLifecycleable;
 import com.arnold.basics.mvp.BasePresenter;
 import com.arnold.basics.mvp.BaseView;
 import com.arnold.basics.util.AppUtil;
@@ -21,9 +25,11 @@ import javax.inject.Inject;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView, IActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView, IActivity, ActivityLifecycleable {
 
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
+
+    private Cache<String, Object> mCache;
 
     @Inject
     protected P mPresenter;
@@ -39,6 +45,22 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected ActivityModule getActivityModule() {
         return new ActivityModule(this);
+    }
+
+
+    @NonNull
+    @Override
+    public synchronized Cache<String, Object> provideCache() {
+        if (mCache == null) {
+            mCache = AppUtil.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+        }
+        return mCache;
+    }
+
+    @NonNull
+    @Override
+    public final Subject<ActivityEvent> provideLifecycleSubject() {
+        return mLifecycleSubject;
     }
 
 
@@ -60,7 +82,33 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
     }
 
-    protected abstract void initInject();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.onDestroy();
+        }
+        mPresenter = null;
+    }
+
+    /**
+     * 是否使用 EventBus
+     */
+    @Override
+    public boolean useEventBus() {
+        return false;
+    }
+
+    /**
+     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
+     * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link BaseFragment} 的Fragment将不起任何作用
+     *
+     * @return
+     */
+    @Override
+    public boolean useFragment() {
+        return false;
+    }
 
 
 }

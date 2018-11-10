@@ -83,7 +83,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null) {
-            mPresenter.detachView();
+            mPresenter.onDestroy();
         }
+        mPresenter = null;
     }
 }

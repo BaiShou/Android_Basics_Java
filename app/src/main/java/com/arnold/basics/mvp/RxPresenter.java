@@ -3,7 +3,7 @@ package com.arnold.basics.mvp;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class RxPresenter<T extends BaseView, M extends IModel> implements BasePresenter<T> {
+public class RxPresenter<T extends BaseView, M extends BaseModel> implements BasePresenter<T> {
 
     protected T mView = null;
     protected M mModel = null;
@@ -33,6 +33,10 @@ public class RxPresenter<T extends BaseView, M extends IModel> implements BasePr
         mCompositeDisposable.remove(subscription);
     }
 
+    @Override
+    public void onStart() {
+
+    }
 
     @Override
     public void attachView(T view) {
@@ -40,10 +44,9 @@ public class RxPresenter<T extends BaseView, M extends IModel> implements BasePr
     }
 
     @Override
-    public void detachView() {
+    public void onDestroy() {
         unSubscribe();
         mModel = null;
         mView = null;
-
     }
 }
