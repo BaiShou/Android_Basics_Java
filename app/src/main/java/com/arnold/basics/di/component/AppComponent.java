@@ -34,6 +34,8 @@ public interface AppComponent {
      */
     public Cache.Factory cacheFactory();
 
+//    DaoSession getDaoSession();
+
     public void inject(Application application);
 
     public void inject(AppDelegate delegate);

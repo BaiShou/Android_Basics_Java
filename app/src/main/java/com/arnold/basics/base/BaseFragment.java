@@ -26,7 +26,7 @@ import javax.inject.Inject;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements BaseView, IFragment, FragmentLifecycleable {
+public abstract class BaseFragment<P extends BasePresenter> extends LazyloadFragment implements BaseView, IFragment, FragmentLifecycleable {
 
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
 
@@ -34,7 +34,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
-
+    @Inject
+    protected BaseActivity mActivity;
 
     protected FragmentComponent getFragmentComponent() {
         return DaggerFragmentComponent.builder()
@@ -76,8 +77,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return initView(inflater, container, savedInstanceState);
     }
-
-    protected abstract void initInject();
 
     @Override
     public void onDestroy() {

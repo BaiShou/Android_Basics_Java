@@ -30,22 +30,27 @@ public interface IActivity {
      *
      * @return 返回 {@code true}, Arms 会自动注册 EventBus
      */
-    boolean useEventBus();
+    default boolean useEventBus() {
+        return false;
+    }
 
-    void setListener();
+    default void setListener() {
+    }
 
-    void initData();
-
-    void initView();
+    default void initData() {
+    }
 
     int getlayoutId();
 
+    void initView();
     /**
-     * 这个 Activity 是否会使用 Fragment,框架会根据这个属性判断是否注册 [FragmentManager.FragmentLifecycleCallbacks]
-     * 如果返回`false`,那意味着这个 Activity 不需要绑定 Fragment,那你再在这个 Activity 中绑定继承于 [BaseFragment] 的 Fragment 将不起任何作用
+     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
+     * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link BaseFragment} 的Fragment将不起任何作用
      *
      * @return
-     * @see ActivityLifecycle.registerFragmentCallbacks
+     * @see ActivityLifecycle#registerFragmentCallbacks
      */
-    boolean useFragment();
+    default boolean useFragment() {
+        return false;
+    }
 }

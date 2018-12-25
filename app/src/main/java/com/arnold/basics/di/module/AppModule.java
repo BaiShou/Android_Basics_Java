@@ -14,6 +14,7 @@ import com.arnold.basics.integration.cache.CacheType;
 import com.arnold.basics.integration.cache.IntelligentCache;
 import com.arnold.basics.integration.cache.LruCache;
 import com.arnold.basics.integration.lifecycle.ActivityLifecycleForRxLifecycle;
+import com.arnold.basics.util.daoope.DbManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -37,6 +38,12 @@ public abstract class AppModule {
         return gsonBuilder.create();
     }
 
+//    @Singleton
+//    @Provides
+//    static DaoSession provideDataBaseManager(Application application) {
+//        return DbManager.getDaoSession(application);
+//    }
+
     @Binds
     abstract IRepositoryManager provideRepositoryManager(RepositoryManager repositoryManager);
 
@@ -48,7 +55,7 @@ public abstract class AppModule {
 
     @Singleton
     @Provides
-    static Cache<String, Object> provideExtras(Cache.Factory cacheFactory) {
+    static Cache provideExtras(Cache.Factory cacheFactory) {
         return cacheFactory.build(CacheType.EXTRAS);
     }
 

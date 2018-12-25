@@ -13,7 +13,7 @@ import javax.inject.Inject;
  * 修改备注：
  */
 public class BaseModelImpl implements BaseModel {
-    private IRepositoryManager mRepositoryManager = null;
+    protected IRepositoryManager mRepositoryManager = null;
 
     public BaseModelImpl(IRepositoryManager mRepositoryManager) {
         this.mRepositoryManager = mRepositoryManager;

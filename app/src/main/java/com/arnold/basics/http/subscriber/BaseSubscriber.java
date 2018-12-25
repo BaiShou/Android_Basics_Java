@@ -4,6 +4,7 @@ import com.arnold.basics.http.exception.ApiException;
 import com.arnold.basics.http.exception.CodeException;
 
 import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public abstract class BaseSubscriber<T> implements Observer<T> {
 
@@ -14,6 +15,15 @@ public abstract class BaseSubscriber<T> implements Observer<T> {
         } else {
             onError(e.getMessage(), String.valueOf(CodeException.UNKNOWN_ERROR));
         }
+        onComplete();
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+    }
+
+    @Override
+    public void onComplete() {
     }
 
     public abstract void onError(String remark, String status);

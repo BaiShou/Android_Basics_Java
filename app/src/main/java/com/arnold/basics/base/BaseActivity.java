@@ -1,10 +1,13 @@
 package com.arnold.basics.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import com.arnold.basics.base.delegate.IActivity;
 import com.arnold.basics.di.component.ActivityComponent;
 import com.arnold.basics.di.component.AppComponent;
@@ -22,6 +25,7 @@ import java.security.Policy;
 
 import javax.inject.Inject;
 
+import butterknife.ButterKnife;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
@@ -30,6 +34,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
 
     private Cache<String, Object> mCache;
+    @Inject
+    public BaseActivity mActivity;
 
     @Inject
     protected P mPresenter;
@@ -67,7 +73,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(getlayoutId());
+        ButterKnife.bind(this);
         onViewCreated();
         initView();
         initData();
@@ -91,24 +99,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         mPresenter = null;
     }
 
-    /**
-     * 是否使用 EventBus
-     */
-    @Override
-    public boolean useEventBus() {
-        return false;
+    public View getContentView() {
+        return getWindow().getDecorView().findViewById(android.R.id.content);
     }
-
-    /**
-     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
-     * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link BaseFragment} 的Fragment将不起任何作用
-     *
-     * @return
-     */
-    @Override
-    public boolean useFragment() {
-        return false;
-    }
-
-
 }

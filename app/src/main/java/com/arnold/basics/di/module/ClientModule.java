@@ -57,12 +57,17 @@ public class ClientModule {
     @Singleton
     @Provides
     static OkHttpClient provideClient( OkHttpClient.Builder builder) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLogger());
+//        BASIC 请求/响应行
+//        HEADER 请求/响应行 + 头
+//        BODY 请求/响应行 + 头 + 体
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .readTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
                 .addInterceptor(new RequestHeaderInterceptor())
-                .addNetworkInterceptor(new HttpLoggingInterceptor(new HttpLogger()));
+                .addNetworkInterceptor(interceptor);
 
         return builder.build();
     }

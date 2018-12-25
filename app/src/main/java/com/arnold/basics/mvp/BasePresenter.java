@@ -12,7 +12,7 @@ public interface BasePresenter<T extends BaseView> {
     void attachView(T view);
 
     /**
-     * 在框架中 {@link Activity#onDestroy()} 时会默认调用 {@link RxPresenter#onDestroy()}
+     * 在框架中 {@link Activity#onDestroy()} 时会默认调用 {@link BasePresenterImpl#onDestroy()}
      */
     void onDestroy();
 }

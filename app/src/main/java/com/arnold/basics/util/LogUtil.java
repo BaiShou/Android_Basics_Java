@@ -14,9 +14,9 @@ public class LogUtil {
 
     public static void init() {
         PrettyFormatStrategy power = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)  //（可选）是否显示线程信息。 默认值为true
+                .showThreadInfo(true)  //（可选）是否显示线程信息。 默认值为true
                 .methodCount(2)         // （可选）要显示的方法行数。 默认2
-                .methodOffset(7)        // （可选）隐藏内部方法调用到偏移量。 默认5
+                .methodOffset(0)        // （可选）隐藏内部方法调用到偏移量。 默认0
                 .tag("POWER")           //（可选）每个日志的全局标记。 默认PRETTY_LOGGER
                 .build();
 

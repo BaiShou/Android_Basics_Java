@@ -20,7 +20,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+
+import com.arnold.basics.util.LogUtil;
+
 import org.greenrobot.eventbus.EventBus;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author：baisoo 创建时间：2018/11/9 14:38
@@ -34,7 +40,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     private android.support.v4.app.FragmentManager mFragmentManager;
     private android.support.v4.app.Fragment mFragment;
     private IFragment iFragment;
-
+    private Unbinder mUnbinder;
 
     public FragmentDelegateImpl(@NonNull android.support.v4.app.FragmentManager fragmentManager, @NonNull android.support.v4.app.Fragment fragment) {
         this.mFragmentManager = fragmentManager;
@@ -58,12 +64,15 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     @Override
     public void onCreateView(@Nullable View view, @Nullable Bundle savedInstanceState) {
         //绑定到butterknife
+        if (view != null)
+            mUnbinder = ButterKnife.bind(mFragment, view);
 
+        iFragment.initData(savedInstanceState);
     }
 
     @Override
     public void onActivityCreate(@Nullable Bundle savedInstanceState) {
-        iFragment.initData(savedInstanceState);
+
     }
 
     @Override
@@ -93,7 +102,15 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
+            try {
+                mUnbinder.unbind();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                //fix Bindings already cleared
+                LogUtil.w("onDestroyView: " + e.getMessage());
+            }
+        }
     }
 
     @Override
@@ -103,6 +120,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
             EventBus.getDefault().unregister(mFragment);//注册到事件主线
         }
 
+        mUnbinder = null;
         this.mFragmentManager = null;
         this.mFragment = null;
         this.iFragment = null;

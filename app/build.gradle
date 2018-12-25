@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -24,6 +25,13 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    greendao {
+        schemaVersion rootProject.ext.database.schemaVersion
+        daoPackage rootProject.ext.database.daoPackage
+        targetGenDir rootProject.ext.database.targetGenDir
+    }
+
 
     packagingOptions {
         exclude 'META-INF/proguard/androidx-annotations.pro'
@@ -93,6 +101,15 @@ dependencies {
     annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
         exclude module: 'jsr305'
     }
-
+    implementation rootProject.ext.dependencies["scanner"]
+    implementation rootProject.ext.dependencies["fastBleLib"]
+    implementation rootProject.ext.dependencies["rxpermissions"]
+    implementation rootProject.ext.dependencies["greendao"]
+    implementation rootProject.ext.dependencies["bugly"]
+    implementation rootProject.ext.dependencies["buglyNDK"]
+    implementation rootProject.ext.dependencies["baseRecyclerViewAdapter"]
+    implementation rootProject.ext.dependencies["smartRefreshLayout"]
+    implementation rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
 
 }

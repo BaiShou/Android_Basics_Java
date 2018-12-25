@@ -33,7 +33,7 @@ public interface IFragment {
      *
      * @param
      */
-    public void initInject(FragmentComponent fragmentComponent);
+     void initInject();
 
     /**
      * 是否使用 EventBus
@@ -44,7 +44,9 @@ public interface IFragment {
      *
      * @return 返回 `true`, Arms 会自动注册 EventBus
      */
-    public Boolean useEventBus();
+    default Boolean useEventBus(){
+        return false;
+    }
 
     /**
      * 初始化 View
@@ -61,6 +63,6 @@ public interface IFragment {
      *
      * @param savedInstanceState
      */
-    public void initData(Bundle savedInstanceState);
+    default void initData(Bundle savedInstanceState){}
 
 }
